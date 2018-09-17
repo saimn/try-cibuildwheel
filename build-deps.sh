@@ -4,11 +4,11 @@ set -e
 
 # Extra options for pip
 if [ -n "$IS_OSX" ]; then
-    local suffix=scipy_installers
+    suffix=scipy_installers
 else
-    local suffix=manylinux
+    suffix=manylinux
 fi
-local pip_opts="--only-binary numpy --find-links https://nipy.bic.berkeley.edu/$suffix"
+pip_opts="--only-binary numpy --find-links https://nipy.bic.berkeley.edu/$suffix"
 
 echo "# Installing Numpy & Cython"
 echo "pip options: $pip_opts"
