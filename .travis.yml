@@ -9,7 +9,7 @@ env:
     - CIBW_BUILD_VERBOSITY=3
     - CIBW_ENVIRONMENT='CFLAGS="-std=c99" PKG_CONFIG_PATH=/project/cfitsio'
     - CIBW_TEST_COMMAND='pytest {project}/'
-    - CIBW_TEST_REQUIRES='pytest'
+    - CIBW_TEST_REQUIRES='pytest numpy>=1.14'
 
 matrix:
   include:
