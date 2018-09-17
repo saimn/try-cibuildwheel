@@ -25,7 +25,7 @@ install:
 
 script:
   - tar xf mpdaf-2.5.1.tar.gz
-  - cd mpdaf
+  - cd mpdaf-2.5.1
   - cibuildwheel --output-dir ../wheelhouse
   - cd ..
   - ls wheelhouse
