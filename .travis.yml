@@ -21,11 +21,13 @@ matrix:
 
 install:
   - $PIP install cibuildwheel==0.9.4
-  - wget https://files.pythonhosted.org/packages/source/m/mpdaf/mpdaf-2.5.1.tar.gz
+  # - wget https://files.pythonhosted.org/packages/source/m/mpdaf/mpdaf-2.5.1.tar.gz
+  - git clone --depth=1 https://git-cral.univ-lyon1.fr/MUSE/mpdaf.git
 
 script:
-  - tar xf mpdaf-2.5.1.tar.gz
-  - cd mpdaf-2.5.1
+  # - tar xf mpdaf-2.5.1.tar.gz
+  # - cd mpdaf-2.5.1
+  - cd mpdaf
   - cibuildwheel --output-dir ../wheelhouse
   - cd ..
   - ls wheelhouse
