@@ -21,7 +21,7 @@ matrix:
 
 install:
   - $PIP install cibuildwheel==0.9.4
-  - wget https://files.pythonhosted.org/packages/source/p/mpdaf/mpdaf-2.5.1.tar.gz
+  - wget https://files.pythonhosted.org/packages/source/m/mpdaf/mpdaf-2.5.1.tar.gz
 
 script:
   - tar xf mpdaf-2.5.1.tar.gz
