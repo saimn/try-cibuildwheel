@@ -3,13 +3,11 @@ language: python
 env:
   global:
     - CIBW_BEFORE_BUILD='pip install numpy==1.10.4'
-    - CIBW_BEFORE_BUILD_LINUX='yum install -y cfitsio'
+    - CIBW_BEFORE_BUILD_LINUX='yum install -y cfitsio-devel'
     - CIBW_SKIP='cp27-* cp33-* cp34-* cp35-* cp37-*'
     - CIBW_BUILD_VERBOSITY=3
     - CIBW_TEST_COMMAND='pytest {project}/'
     - CIBW_TEST_REQUIRES='pytest'
-    - PKGNAME='mpdaf'
-    - PKGVER='2.5.1'
 
 matrix:
   include:
@@ -23,10 +21,10 @@ matrix:
 
 install:
   - $PIP install cibuildwheel==0.9.4
-  - wget https://files.pythonhosted.org/packages/source/p/$PKGNAME/$PKGNAME-$PKGVER.tar.gz
+  - wget https://files.pythonhosted.org/packages/source/p/mpdaf/mpdaf-2.5.1.tar.gz
 
 script:
-  - tar xf $PKGNAME-$PKGVER.tar.gz
+  - tar xf mpdaf-2.5.1.tar.gz
   - cd mpdaf
   - cibuildwheel --output-dir ../wheelhouse
   - cd ..
