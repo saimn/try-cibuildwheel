@@ -4,8 +4,7 @@ python:
 
 env:
   global:
-    # - CIBW_BEFORE_BUILD='pip install numpy==1.10.4'
-    - CIBW_BEFORE_BUILD_LINUX='yum install -y cfitsio-devel && pip install numpy==1.10.4 Cython'
+    - CIBW_BEFORE_BUILD='pip install numpy==1.10.4 Cython'
     - CIBW_SKIP='cp27-* cp33-* cp34-* cp35-* cp37-*'
     - CIBW_BUILD_VERBOSITY=3
     - CIBW_TEST_COMMAND='pytest {project}/'
@@ -17,18 +16,22 @@ matrix:
       services:
         - docker
       env: PIP=pip
-    # - os: osx
-    #   language: generic
-    #   env: PIP=pip2
+    - os: osx
+      language: generic
+      env: PIP=pip
 
 install:
   - $PIP install cibuildwheel==0.9.4
   # - wget https://files.pythonhosted.org/packages/source/m/mpdaf/mpdaf-2.5.1.tar.gz
   - git clone --depth=1 https://git-cral.univ-lyon1.fr/MUSE/mpdaf.git
+  - curl -s https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/cfitsio3370.tar.gz | tar xvz
+  - cd cfitsio && ./configure && make shared && make install && cd ..
+  - ls
 
 script:
   # - tar xf mpdaf-2.5.1.tar.gz
   # - cd mpdaf-2.5.1
+  # - export PKG_CONFIG_PATH=cfitsio
   - cd mpdaf
   - cibuildwheel --output-dir ../wheelhouse
   - cd ..
