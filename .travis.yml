@@ -2,11 +2,11 @@ language: python
 
 env:
   global:
-    - CIBW_BEFORE_BUILD='pip install numpy==1.10.4'
+    - CIBW_BEFORE_BUILD='pip install numpy==1.10.4 Cython'
     - CIBW_BEFORE_BUILD_LINUX='yum install -y cfitsio'
     - CIBW_SKIP='cp27-* cp33-* cp34-* cp35-* cp37-*'
     - CIBW_BUILD_VERBOSITY=3
-    - CIBW_TEST_COMMAND='pytest'
+    - CIBW_TEST_COMMAND='pytest {project}/'
     - CIBW_TEST_REQUIRES='pytest'
 
 matrix:
@@ -19,7 +19,13 @@ matrix:
     #   language: generic
     #   env: PIP=pip2
 
+install:
+  - $PIP install cibuildwheel==0.9.4
+  - git clone git@git-cral.univ-lyon1.fr:MUSE/mpdaf.git
 
 script:
-  - $PIP install cibuildwheel==0.9.4
-  - cibuildwheel --output-dir wheelhouse
+  - cd mpdaf
+  - git checkout 2.5.1
+  - cibuildwheel --output-dir ../wheelhouse
+  - cd ..
+  - ls wheelhouse
