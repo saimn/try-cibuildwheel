@@ -4,7 +4,7 @@ python:
 
 env:
   global:
-    - CIBW_BEFORE_BUILD='pip install numpy==1.10.4 Cython && build-deps.sh'
+    - CIBW_BEFORE_BUILD='pwd && ls && build-deps.sh'
     - CIBW_SKIP='cp27-* cp33-* cp34-* cp35-* cp37-*'
     - CIBW_BUILD_VERBOSITY=3
     - CIBW_TEST_COMMAND='pytest {project}/'
