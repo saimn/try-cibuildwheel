@@ -4,9 +4,10 @@ python:
 
 env:
   global:
-    - CIBW_BEFORE_BUILD='pwd && ls && build-deps.sh'
+    - CIBW_BEFORE_BUILD='bash build-deps.sh'
     - CIBW_SKIP='cp27-* cp33-* cp34-* cp35-* cp37-*'
     - CIBW_BUILD_VERBOSITY=3
+    - CIBW_ENVIRONMENT='CFLAGS="-std=c99"'
     - CIBW_TEST_COMMAND='pytest {project}/'
     - CIBW_TEST_REQUIRES='pytest'
 
@@ -22,16 +23,13 @@ matrix:
 
 install:
   - $PIP install cibuildwheel==0.9.4
-  # - wget https://files.pythonhosted.org/packages/source/m/mpdaf/mpdaf-2.5.1.tar.gz
-  - wget https://git-cral.univ-lyon1.fr/MUSE/mpdaf/-/archive/master/mpdaf-master.tar.gz
+  - wget https://files.pythonhosted.org/packages/source/m/mpdaf/mpdaf-2.5.1.tar.gz
 
 script:
   # - export PKG_CONFIG_PATH=cfitsio
-  # - tar xf mpdaf-2.5.1.tar.gz
-  # - cd mpdaf-2.5.1
-  - tar xf mpdaf-master.tar.gz
-  - cp ./build-deps.sh mpdaf-master/
-  - cd mpdaf-master
+  - tar xf mpdaf-2.5.1.tar.gz
+  - cd mpdaf-2.5.1
+  - cp ../build-deps.sh .
   - cibuildwheel --output-dir ../wheelhouse
   - cd ..
   - ls wheelhouse
