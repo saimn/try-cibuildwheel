@@ -1,4 +1,5 @@
 language: python
+cache: pip
 python:
   - "3.6"
 
@@ -7,9 +8,9 @@ env:
     - CIBW_BEFORE_BUILD='bash build-deps.sh'
     - CIBW_SKIP='cp27-* cp33-* cp34-* cp35-* cp37-*'
     - CIBW_BUILD_VERBOSITY=3
-    - CIBW_ENVIRONMENT='CFLAGS="-std=c99" PKG_CONFIG_PATH=/project/cfitsio/lib/pkgconfig'
+    - CIBW_ENVIRONMENT='CFLAGS="-std=c99" PKG_CONFIG_PATH=/project/cfitsio/lib/pkgconfig LD_LIBRARY_PATH=/project/cfitsio/lib'
     - CIBW_TEST_REQUIRES='pytest numpy>=1.14'
-    - CIBW_TEST_COMMAND='pytest {project}/'
+    - CIBW_TEST_COMMAND='pytest {project}/lib/mpdaf'
 
 matrix:
   include:
