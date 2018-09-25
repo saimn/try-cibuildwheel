@@ -2,11 +2,11 @@
 
 set -e
 
-echo "# Installing Numpy & Cython"
-pip install numpy==1.10.4 Cython
+echo "# Installing Numpy"
+pip install numpy==1.10.4
 
 
-if [ -n "$IS_OSX" ]; then
+if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     brew install cfitsio
     brew info cfitsio
     echo $(brew --prefix cfitsio)
