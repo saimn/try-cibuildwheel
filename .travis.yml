@@ -9,9 +9,9 @@ env:
     - CIBW_SKIP='cp27-* cp33-* cp34-* cp35-* cp37-*'
     - CIBW_BUILD_VERBOSITY=3
     - CIBW_ENVIRONMENT_LINUX='CFLAGS="-std=c99" PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/project/cfitsio/lib/pkgconfig LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/project/cfitsio/lib'
-    - CIBW_ENVIRONMENT_MACOS='CFLAGS="-std=c99"'
-    - CIBW_TEST_REQUIRES='pytest numpy==1.15.1'
-    - CIBW_TEST_COMMAND='pytest --continue-on-collection-errors {project}/lib/mpdaf'
+    - CIBW_ENVIRONMENT_MACOS='CFLAGS="-std=c99" PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/project/cfitsio/lib/pkgconfig LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/project/cfitsio/lib'
+    - CIBW_TEST_REQUIRES='pytest numpy==1.15.1 fitsio'
+    - CIBW_TEST_COMMAND='pytest --ignore=lib/mpdaf/tools/ctools.py {project}/lib/mpdaf'
 
 matrix:
   include:
