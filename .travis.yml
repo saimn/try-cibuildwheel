@@ -8,10 +8,10 @@ env:
     - CIBW_BEFORE_BUILD='bash build-deps.sh'
     - CIBW_SKIP='cp27-* cp33-* cp34-* cp35-* cp37-*'
     - CIBW_BUILD_VERBOSITY=3
-    - CIBW_ENVIRONMENT_LINUX='CFLAGS="-std=c99" PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/project/cfitsio/lib/pkgconfig LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/project/cfitsio/lib'
+    - CIBW_ENVIRONMENT_LINUX='USEOPENMP=0 CFLAGS="-std=c99" PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/project/cfitsio/lib/pkgconfig LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/project/cfitsio/lib'
     - CIBW_ENVIRONMENT_MACOS='CFLAGS="-std=c99"'
     - CIBW_TEST_REQUIRES='pytest numpy==1.15.1'
-    - CIBW_TEST_COMMAND='PYTHONFAULTHANDLER=1 pytest -v $(dirname $(python -c "import mpdaf; print(mpdaf.__file__)"))'
+    - CIBW_TEST_COMMAND='pytest -v $(dirname $(python -c "import mpdaf; print(mpdaf.__file__)"))'
 
 matrix:
   include:
