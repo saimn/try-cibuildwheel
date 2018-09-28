@@ -11,9 +11,10 @@ if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     brew info cfitsio
     echo $(brew --prefix cfitsio)
 else
+    echo "# Downloading cfitsio"
+    curl -s https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/cfitsio3370.tar.gz | tar xz
     echo "# Installing cfitsio"
-    curl -s https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/cfitsio3370.tar.gz | tar xvz
     cd cfitsio
-    ./configure && make shared && make install
+    ./configure && make clean shared install
     cd ..
 fi
