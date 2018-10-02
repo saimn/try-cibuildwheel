@@ -6,7 +6,8 @@ python:
 env:
   global:
     - CIBW_BEFORE_BUILD='bash build-deps.sh'
-    - CIBW_SKIP='cp27-* cp33-* cp34-*'
+    - CIBW_BUILD='cp3?-*'
+    - CIBW_SKIP='*-win32 *-manylinux1_i686'
     - CIBW_BUILD_VERBOSITY=3
     - CIBW_ENVIRONMENT_LINUX='USEOPENMP=0 CFLAGS="-std=c99" PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/project/cfitsio/lib/pkgconfig LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/project/cfitsio/lib'
     - CIBW_ENVIRONMENT_MACOS='CFLAGS="-std=c99"'
@@ -24,13 +25,13 @@ matrix:
       env: PIP=pip
 
 install:
-  - $PIP install cibuildwheel==0.9.4
+  - $PIP install cibuildwheel
   - wget https://files.pythonhosted.org/packages/source/m/mpdaf/mpdaf-2.5.1.tar.gz
 
 script:
   - tar xf mpdaf-2.5.1.tar.gz
+  - cp build-deps.sh mpdaf-2.5.1/
   - cd mpdaf-2.5.1
-  - cp ../build-deps.sh .
   - cibuildwheel --output-dir ../wheelhouse
   - cd ..
   - ls wheelhouse
