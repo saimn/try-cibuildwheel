@@ -1,7 +1,7 @@
 language: python
 cache: pip
 python:
-  - "3.6"
+  - "3.5"
 
 env:
   global:
@@ -12,7 +12,7 @@ env:
     - CIBW_BUILD_VERBOSITY=3
     - CIBW_ENVIRONMENT_LINUX='CFLAGS="-std=c99"'
     - CIBW_ENVIRONMENT_MACOS='CFLAGS="-std=c99"'
-    - CIBW_TEST_REQUIRES='numpy==1.15.1 pytest pytest-astropy pyyaml psutil scipy h5py matplotlib beautifulsoup4'
+    - CIBW_TEST_REQUIRES='numpy==1.15.1 pytest pytest-astropy'
     - CIBW_TEST_COMMAND='pytest -W ignore $(dirname $(python -c "import astropy; print(astropy.__file__)"))'
 
 matrix:
