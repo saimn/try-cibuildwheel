@@ -5,14 +5,19 @@ python:
 
 env:
   global:
+    - MPDAF_VERSION='2.5.1'
     - CIBW_BEFORE_BUILD='bash build-deps.sh'
     - CIBW_BUILD='cp35-* cp36-* cp37-*'
     - CIBW_SKIP='*-win32 *-manylinux1_i686'
     - CIBW_BUILD_VERBOSITY=3
-    - CIBW_ENVIRONMENT_LINUX='USEOPENMP=0 CFLAGS="-std=c99" PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/project/cfitsio/lib/pkgconfig LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/project/cfitsio/lib'
+    - CIBW_ENVIRONMENT_LINUX='
+          USEOPENMP=0
+          CFLAGS="-std=c99"
+          PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/project/cfitsio/lib/pkgconfig
+          LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/project/cfitsio/lib'
     - CIBW_ENVIRONMENT_MACOS='CFLAGS="-std=c99"'
     - CIBW_TEST_REQUIRES='pytest numpy==1.15.1'
-    - CIBW_TEST_COMMAND='pytest -v -W once $(dirname $(python -c "import mpdaf; print(mpdaf.__file__)"))'
+    - CIBW_TEST_COMMAND='pytest $(dirname $(python -c "import mpdaf; print(mpdaf.__file__)"))'
 
 matrix:
   include:
@@ -26,12 +31,21 @@ matrix:
 
 install:
   - $PIP install cibuildwheel
-  - wget https://files.pythonhosted.org/packages/source/m/mpdaf/mpdaf-2.5.1.tar.gz
 
 script:
-  - tar xf mpdaf-2.5.1.tar.gz
-  - cp build-deps.sh mpdaf-2.5.1/
-  - cd mpdaf-2.5.1
+  - wget -O- https://files.pythonhosted.org/packages/source/m/mpdaf/mpdaf-$MPDAF_VERSION.tar.gz | tar xz
+  - cp build-deps.sh mpdaf-$MPDAF_VERSION/
+  - cd mpdaf-$MPDAF_VERSION
   - cibuildwheel --output-dir ../wheelhouse
   - cd ..
   - ls wheelhouse
+
+# deploy:
+#   provider: releases
+#   api_key:
+#     secure: POTUsLc335UpybDrIAFCuC5Ck8lB4EDfyD1rHSwh3dxsGOH1mvmjbKJ45FD81KvsdsJ5sNqSXEkgSOBZ60eRYfPHI1GudYlODEdsyB0umq/Giovr6fK6PvtOMQpnHokQDcBLIN+FkDN39F8DUxbz9R+ntsu5DSjbVLiFNkml3ADL49oEb+pn34PUVOcG4zObBwQmxe2t4Qg19uvxflqxxFjGPGy53RY0oPGVu8MIDE1lM+b86mNtAJSRszQj+/fhHjGc/8jN2/ZSv1GcyLs3z1c1gXKaPRI7UXRBxbb85sSg8f/CUJ0m0QvHurWyYqpBIMKrvfnbKhrnTr01EVywa/GC2EMd6l/lD6dNQiv0AWBhkap46epS96DZyzo1QuS5m4kMqVAdEvo/dmJEZUz2pklqtrOhkxztUFUiGZSiJDRgvFaV7X+efy4+NABCzS1jvueNn7QE+7XMnVDLVbUkGTTexN6MJW77+r+P67HaKsGRcf6wwpjdCsecGMLhxv9GKLNTxh5gN0pnsPStQArvG7p5ASmyJYBRyo19JKyflwG/IxPmaY0/o1BsNnH9cXafEvgXXx9iGnOaz2h7llUW2JJkZ7WmyaCBCYyj6FkOegLlz9TJoSVxPINzyvKlWUZCU1XW7UuChszA8RxnmwaHjprS5zelexWUHhj6DBqjp5I=
+#   skip_cleanup: true
+#   file_glob: true
+#   file: wheelhouse/*.whl
+#   on:
+#     repo: musevlt/mpdaf-wheels
