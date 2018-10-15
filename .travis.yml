@@ -13,7 +13,7 @@ env:
     - CIBW_ENVIRONMENT_LINUX='CFLAGS="-std=c99"'
     - CIBW_ENVIRONMENT_MACOS='CFLAGS="-std=c99"'
     - CIBW_TEST_REQUIRES='numpy==1.15.1 pytest pytest-astropy pyyaml psutil scipy h5py matplotlib beautifulsoup4'
-    - CIBW_TEST_COMMAND='pytest $(dirname $(python -c "import astropy; print(astropy.__file__)"))'
+    - CIBW_TEST_COMMAND='pytest -W ignore $(dirname $(python -c "import astropy; print(astropy.__file__)"))'
 
 matrix:
   include:
@@ -29,6 +29,7 @@ install:
   - $PIP install cibuildwheel
 
 script:
+  - python --version
   - wget -O- https://files.pythonhosted.org/packages/source/a/astropy/astropy-$VERSION.tar.gz | tar xz
   - cp build-deps.sh astropy-$VERSION/
   - cd astropy-$VERSION
