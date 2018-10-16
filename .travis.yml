@@ -9,7 +9,7 @@ env:
     - CIBW_BEFORE_BUILD='bash build-deps.sh'
     - CIBW_BUILD='cp35-* cp36-* cp37-*'
     - CIBW_SKIP='*-win32 *-manylinux1_i686'
-    - CIBW_BUILD_VERBOSITY=1
+    - CIBW_BUILD_VERBOSITY=0
     - CIBW_ENVIRONMENT_LINUX='CFLAGS="-std=c99"'
     - CIBW_ENVIRONMENT_MACOS='CC=clang CFLAGS="-std=c99"'
     - CIBW_TEST_REQUIRES='numpy==1.15.1 pytest pytest-astropy'
@@ -37,12 +37,11 @@ script:
   - cd ..
   - ls wheelhouse
 
-# deploy:
-#   provider: releases
-#   api_key:
-#     secure: POTUsLc335UpybDrIAFCuC5Ck8lB4EDfyD1rHSwh3dxsGOH1mvmjbKJ45FD81KvsdsJ5sNqSXEkgSOBZ60eRYfPHI1GudYlODEdsyB0umq/Giovr6fK6PvtOMQpnHokQDcBLIN+FkDN39F8DUxbz9R+ntsu5DSjbVLiFNkml3ADL49oEb+pn34PUVOcG4zObBwQmxe2t4Qg19uvxflqxxFjGPGy53RY0oPGVu8MIDE1lM+b86mNtAJSRszQj+/fhHjGc/8jN2/ZSv1GcyLs3z1c1gXKaPRI7UXRBxbb85sSg8f/CUJ0m0QvHurWyYqpBIMKrvfnbKhrnTr01EVywa/GC2EMd6l/lD6dNQiv0AWBhkap46epS96DZyzo1QuS5m4kMqVAdEvo/dmJEZUz2pklqtrOhkxztUFUiGZSiJDRgvFaV7X+efy4+NABCzS1jvueNn7QE+7XMnVDLVbUkGTTexN6MJW77+r+P67HaKsGRcf6wwpjdCsecGMLhxv9GKLNTxh5gN0pnsPStQArvG7p5ASmyJYBRyo19JKyflwG/IxPmaY0/o1BsNnH9cXafEvgXXx9iGnOaz2h7llUW2JJkZ7WmyaCBCYyj6FkOegLlz9TJoSVxPINzyvKlWUZCU1XW7UuChszA8RxnmwaHjprS5zelexWUHhj6DBqjp5I=
-#   skip_cleanup: true
-#   file_glob: true
-#   file: wheelhouse/*.whl
-#   on:
-#     repo: musevlt/mpdaf-wheels
+deploy:
+  provider: releases
+  api_key:
+    secure: bHKoAE9vX23kJ8sHT/U35EpNHasCxzDi0q3rzP8NvCIE3e4MbaAdwLNMltpLBwQO0vp5tOJOdSzoe7lqIoYqkKYh4oxQPKOWu6a5NWOzz6QHJyO95SsmF7psT23S86vLd4U424J9Xp9GbMks/o3v8t/sC+JAQI4HR7vzrwi1oLrRpmRVCbTRWjgbCfs8+3QPygqA5dOIpO4cO1PE35hbijZEt13nUtUFEu5ffl3UfGU48NxIbTmvv3pOTb+qr/p91UmbO+sHDuXDdIaKCD6to8nybBtw0vYzooa+2y8J/ZyEfrG69PR4hUlGdXSMGo6FXC7SHJ+ZazkmzwvusLTf6tm1BgKt5EVW+8I+izhoE93CVIaUi5s8YJzTZP/LwKn6YOXdyqSxhOotpgRURjOZJgb0Xm6mTnoRiMYH3mE1LhS/ovdyVl4doJjqTGz+kuHPOoK8D/EspIA04KO3V4OY7d1aznL3sG2ylj4JDUTViMjIuQL2S/fY4UeqiP29ZzOXCYBgdZ0s6AgB3ViwZ0pUHtX3mUO0L6Ha/lorUXtt9RrNmdFqjRgMDEC25irSNO5DmnHIq7XjHVuUwq1abTW425VkG/qz60yHptmqW9i14v2f7Oljv33kJqpY+AaTNaBXdz1CXvQiI8mcyT1Blmp5hvMYH16NMpNlP/c6QJIDmW8=
+  file_glob: true
+  file: wheelhouse/*.whl
+  on:
+    repo: saimn/try-cibuildwheel
