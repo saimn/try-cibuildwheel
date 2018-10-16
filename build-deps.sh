@@ -2,6 +2,8 @@
 
 set -e
 
+pip install Cython jinja2
+
 echo "# Installing Numpy"
 pyversion=$(python -c 'import sys; print("%d.%d" % (sys.version_info.major, sys.version_info.minor))')
 case "$pyversion" in
